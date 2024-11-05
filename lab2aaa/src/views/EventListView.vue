@@ -2,13 +2,15 @@
 import EventCard from '@/components/EventCard.vue'
 import type { Event } from '@/types'
 import { ref, onMounted } from 'vue'
-import axios from 'axios'
+import EventService from '@/services/EventService'
 
- const events = ref<Event[]>(null)
+const events = ref<Event[]>(null)
 
 onMounted(() => {
-  axios
-    .get('https://my-json-server.typicode.com/DaiYic/03db/events')
+  EventService.getEvents()
+     .then((response) => {
+       events.value = response.data
+})
    .then((response) => {
     events.value = response.data
     })
@@ -17,7 +19,6 @@ onMounted(() => {
     })
 })
 
-const events = ref<Event[]>(null)
 </script>
 
 <template>
